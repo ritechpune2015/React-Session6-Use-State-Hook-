@@ -1,20 +1,33 @@
-import { useState } from 'react';
-import './App.css'
+import { useState } from "react";
+import { ItemList } from "./components/itemlist"
 
 function App() {
-   
-  const [cnt,updateCnt] =useState(10);
+  const [furits,updateFruit] =useState(['Apple','Mango','Banana','Orange','Grapes','NewFruit']);
 
-   let handleClick=()=>{
-     //cnt=cnt+1;
-     //console.log(cnt);
-     updateCnt((val)=>val+1);
-   }
+  let deleteFruit =(item)=>{
+      let newarray = furits.filter(p=>p!=item);
+      updateFruit(newarray);
+  };
+
+  let addItem=(event)=>{
+     
+      if(event.key=="Enter")
+      {
+         let val=event.target.value;
+      //   console.log(val);
+        //    updateFruit([]); //overwrite old vlaue new
+
+         event.target.value="";
+
+       // let newarray =[...furits,val];
+      //  updateFruit(newarray);
+         updateFruit((old)=>[...old,val]);
+      }
+  }
   return (
     <>
-       Count : {cnt}
-       <br />
-       <input type="button" value="Increment" onClick={handleClick} />
+    <h2> Fruit List</h2>
+     <ItemList handleChange={addItem} items={furits} handleDelete={deleteFruit} />
     </>
   )
 }
